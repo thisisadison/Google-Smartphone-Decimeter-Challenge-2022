@@ -1,133 +1,79 @@
-# Google-Smartphone-Decimeter-Challenge-2022
+# Google Smartphone Decimeter Challenge 2022
 
-Kaggle Competition
+Notebook-based pipeline for the Kaggle **Smartphone Decimeter 2022** challenge.
 
-# Data Processing and Linear Regression Pipeline
+This project processes raw smartphone sensor data (GNSS + IMU), builds training features, performs exploratory analysis, and trains a baseline linear regression model.
 
-This repository contains a set of Jupyter notebooks used to process sensor data, perform exploratory analysis, and train a linear regression model.
+## Repository Contents
 
-The workflow consists of multiple stages including data initialization, preprocessing, feature engineering, exploratory data analysis (EDA), and model training.
+- `SC4000_INIT.ipynb` - Environment setup and Kaggle dataset download.
+- `SC4000_GROUNDTRUTH.ipynb` - Ground-truth target preparation.
+- `SC4000_IMU.ipynb` - IMU data extraction and preparation.
+- `SC4000_GNSS.ipynb` - GNSS data extraction and preparation.
+- `SC4000_DATA_WRANGLING.ipynb` - Dataset merging, cleaning, and feature engineering.
+- `SC4000_EDA.ipynb` - Exploratory data analysis and feature/target inspection.
+- `SC4000_TEST.ipynb` - Test-set feature preparation.
+- `SC4000_LINEAR_REGRESSION.ipynb` - Baseline model training and evaluation.
+- `SUBMISSIONS/submission.csv` - Example submission output.
 
----
+## Prerequisites
 
-# Project Workflow
+- Python 3.9+
+- Jupyter Notebook or JupyterLab
+- Kaggle account and API credentials
 
-The notebooks should be run in the following order.
-
-1. **Init**
-2. **Groundtruth**
-3. **IMU**
-4. **GNSS**
-5. **Data Wrangling**
-6. **EDA**
-7. **Test**
-8. **Linear Regression**
-
----
-
-# Notebook Descriptions
-
-## 1. Init
-Run the **init file** the first time you execute the notebooks.  
-It initializes the environment and required configurations.
-
----
-
-## 2. Groundtruth
-Initializes the **ground truth dataset**, which serves as the output variable for model training and evaluation.
-
----
-
-## 3. IMU
-Initializes **IMU sensor data**, including:
-
-- Accelerometer data
-- Gyroscope data
-
-These signals are later used for **feature engineering** to create model input features.
-
----
-
-## 4. GNSS
-Initializes **device GNSS data**, which provides location-based information used as part of the dataset.
-
----
-
-## 5. Data Wrangling
-Performs preprocessing steps including:
-
-- Data cleaning
-- Dataset merging
-- Feature preparation
-- Formatting data for analysis and modelling
-
----
-
-## 6. EDA (Exploratory Data Analysis)
-Explores relationships between:
-
-- **Input features**
-- **Output feature (ground truth)**
-
-This stage helps identify useful patterns and validate feature quality.
-
----
-
-## 7. Test
-Generates **test input features** that will be used to evaluate the trained model.
-
----
-
-## 8. Linear Regression
-Trains and evaluates a **linear regression model** using the feature-engineered input data.
-
----
-
-# Dependencies Between Notebooks
-
-The workflow has the following dependencies:
-
-```
-Groundtruth
-IMU
-GNSS
-   ↓
-Data Wrangling
-   ↓
-EDA
-```
-
-Linear regression requires:
-
-```
-Data Wrangling + Test
-```
-
-Note:  
-The **Init notebook** only needs to be run once to set up the environment.
-
----
-
-# Usage
-
-Clone the repository:
+Install core packages:
 
 ```bash
-git clone <repository-url>
-cd <repository-name>
+pip install jupyter kaggle python-dotenv pandas numpy matplotlib seaborn scikit-learn pyproj requests
 ```
 
-Launch Jupyter:
+## Kaggle Authentication
+
+Set credentials via environment variables before running notebooks that call the Kaggle API:
+
+```bash
+export KAGGLE_USERNAME="<your_kaggle_username>"
+export KAGGLE_KEY="<your_kaggle_api_key>"
+```
+
+Recommended: store these in a local `.env` file (not committed to git).
+
+## Run Order
+
+Run notebooks in this order to satisfy dependencies:
+
+1. `SC4000_INIT.ipynb`
+2. `SC4000_GROUNDTRUTH.ipynb`
+3. `SC4000_IMU.ipynb`
+4. `SC4000_GNSS.ipynb`
+5. `SC4000_DATA_WRANGLING.ipynb`
+6. `SC4000_EDA.ipynb`
+7. `SC4000_TEST.ipynb`
+8. `SC4000_LINEAR_REGRESSION.ipynb`
+
+## Pipeline Dependency Summary
+
+- `GROUNDTRUTH`, `IMU`, and `GNSS` produce source datasets.
+- `DATA_WRANGLING` merges and engineers model-ready features.
+- `EDA` validates feature quality and relationships.
+- `TEST` prepares inference-time features.
+- `LINEAR_REGRESSION` consumes wrangled/train-test artifacts for baseline modeling.
+
+## Quick Start
 
 ```bash
 jupyter notebook
 ```
 
-Run the notebooks in the order described above.
+Open the notebooks and execute cells from top to bottom in the run order above.
 
----
+## Reproducibility Notes
 
-# Notes
+- Run each notebook from a clean kernel to avoid stale variables.
+- If a notebook fails due to missing intermediate files, rerun upstream notebooks.
+- Keep package versions consistent across machines to reduce numeric/output drift.
 
-- Ensure notebooks are executed in the correct order due to dependencies.
-- Some notebooks rely on intermediate datasets generated by earlier steps.
+## Security Note
+
+Do not hardcode Kaggle keys inside notebooks. Use environment variables or `.env` locally.
