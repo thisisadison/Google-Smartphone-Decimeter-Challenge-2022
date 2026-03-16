@@ -41,7 +41,6 @@ export KAGGLE_KEY="<your_kaggle_api_key>"
   - `SC4000_LIGHTGBM.ipynb` → `SUBMISSIONS/LIGHT_GBM/submission.csv`
   - `SC4000_RANDOM_FOREST.ipynb` → `SUBMISSIONS/RANDOM_FOREST/submission.csv`
   - `SC4000_LRLGBM_STACK.ipynb` → `SUBMISSIONS/DUMP/submission.csv`
-- `SC4000_DATA_PROCESSING-Copy1.ipynb` is an exploratory variant that also prepares `ground_truth.csv`, `device_imu.csv`, and `device_gnss.csv`; treat it as scratch/reference.
 
 ## Recommended Run Order
 
